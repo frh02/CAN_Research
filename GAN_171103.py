@@ -108,11 +108,15 @@ def PlotData( x, g_z, data_cols, label_cols=[], seed=0, with_class=False, data_d
     
     real_samples = pd.DataFrame(x, columns=data_cols+label_cols)
     gen_samples = pd.DataFrame(g_z, columns=data_cols+label_cols)
-    
+    plt.plot(real_samples[data_cols[0]])
+    plt.plot(gen_samples[ data_cols[0]])
+    plt.xlim((0,100))
+    plt.legend(["real", "generated"], loc ="lower right")
+  
     f, axarr = plt.subplots(1, 2, figsize=(6,2) )
     if with_class:
-        axarr[0].scatter( real_samples[data_cols[0]], real_samples[data_cols[1]], c=real_samples[label_cols[0]]/2 ) #, cmap='plasma'  )
-        axarr[1].scatter( gen_samples[ data_cols[0]], gen_samples[ data_cols[1]], c=gen_samples[label_cols[0]]/2 ) #, cmap='plasma'  )
+        axarr[0].plot( real_samples[data_cols[0]], real_samples[data_cols[1]])#, c=real_samples[label_cols[0]]/2 ) #, cmap='plasma'  )
+        axarr[1].plot( gen_samples[ data_cols[0]], gen_samples[ data_cols[1]])#, c=gen_samples[label_cols[0]]/2 ) #, cmap='plasma'  )
         
         # For when there are multiple one-hot encoded label columns
         # for i in range(len(label_cols)):
@@ -122,8 +126,8 @@ def PlotData( x, g_z, data_cols, label_cols=[], seed=0, with_class=False, data_d
             # axarr[1].scatter( temp[data_cols[0]], temp[data_cols[1]], c='C'+str(i), label=i )
         
     else:
-        axarr[0].scatter( real_samples[data_cols[0]], real_samples[data_cols[1]]) #, cmap='plasma'  )
-        axarr[1].scatter( gen_samples[data_cols[0]], gen_samples[data_cols[1]]) #, cmap='plasma'  )
+        axarr[0].plot( real_samples[data_cols[0]], real_samples[data_cols[1]]) #, cmap='plasma'  )
+        axarr[1].plot( gen_samples[data_cols[0]], gen_samples[data_cols[1]]) #, cmap='plasma'  )
     axarr[0].set_title('real')
     axarr[1].set_title('generated')   
     axarr[0].set_ylabel(data_cols[1]) # Only add y label to left plot
